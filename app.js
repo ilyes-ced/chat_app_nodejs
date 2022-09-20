@@ -101,6 +101,11 @@ app.post('/register',async (req, res)=>{
 	res.redirect('/login')
 })
 
-
+app.post('/logout',async (req, res)=>{
+	req.session.destroy((err)=>{
+		if(err) throw err
+		res.redirect('/')
+	})
+})
 
 app.listen(3000);
