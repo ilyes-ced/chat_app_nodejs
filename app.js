@@ -5,11 +5,33 @@ const mongo_session = require('connect-mongodb-session')(session)
 const mongo_uri = 'mongodb://localhost:27017/test'
 const user_model = require('./models/User')
 const bcrypt = require('bcrypt')
+const socketio = require('socket.io')
+const http = require('http')
+const server = http.createServer(app)
+const io = socketio(server)
+
+
+//socket.emit('message', 'some string idk idk')
+//socket.broadcast.emit()
+//io.emit()
+io.on('connection', socket=>{
+	console.log('it is working')
+	socket.emit('message', 'some string idk idk')
+	socket.broadcast.emit('message', 'he has joined the chat')
+	socket.on('disconnect', ()=>{
+		io.emit('message', 'a user has left the chat')
+	})
+
+	socket.on('chat_msg',(message)=>{
+		console.log(message)
+	})
+})
+
+
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname))
 app.use(express.urlencoded({extended: true}))
-
 
 
 
@@ -61,7 +83,6 @@ const is_auth = (req,res,next) => {
 
 const pages_route = require('./routes/pages_router')
 app.get('/', is_auth,(req, res)=>{
-	console.log(req.session)
 	res.render('home_page')
 })
 
@@ -85,6 +106,8 @@ app.post('/login',async (req, res)=>{
 	console.log(matched)
 	if(!matched) return res.redirect('/login')
 	req.session.is_auth = true
+	req.session.username = user.username
+	req.session.email = req.body.email
 	res.redirect('/')
 })
 
@@ -108,4 +131,17 @@ app.post('/logout',async (req, res)=>{
 	})
 })
 
-app.listen(3000);
+
+
+app.post('/sent_msg',async (req, res)=>{})
+
+
+
+
+
+
+
+
+
+
+server.listen(3000);

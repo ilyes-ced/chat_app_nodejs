@@ -15,7 +15,7 @@
         </div>
     </aside>
     <div class='w-full flex flex-col'> 
-        <div class='overflow-auto  h-full bg-green-600'>
+        <div id="chat_box" class='overflow-auto  h-full bg-green-600'>
             texts here
             <a href="/login">login</a>
             <a href="/register">register</a>
@@ -25,15 +25,24 @@
         </div>
         <div class="bg-black">
             <div class='p-[10px]'>
-                <input type="text" class="bg-blue-600 h-[40px] pl-4 rounded-full w-1/2" placeholder="type">
+                <!--<form action="sent_msg" method="post" class="flex flex-row">-->
+                    <input id="chat_input" type="text" class="bg-blue-600 h-[40px] pl-4 rounded-full w-1/2" placeholder="type">
+                    <button id="chat_submit" class="bg-blue-600 h-[40px] pl-4 rounded-full ">send</button>
+                <!--</form> -->
             </div>
         </div>
         </div>
     </div>
     
 
+<script src="/socket.io/socket.io.js"></script>
 
-
-
+<script src="public/js/jq.js"></script>
+<script src="public/js/main.js"></script>
+<script>
+    
+</script>
 </body>
 </html>
+
+
