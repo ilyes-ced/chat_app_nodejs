@@ -3,8 +3,6 @@ const app = express()
 const session = require('express-session')
 const mongo_session = require('connect-mongodb-session')(session)
 const mongo_uri = 'mongodb://localhost:27017/test'
-const user_model = require('./models/User')
-const bcrypt = require('bcrypt')
 const socketio = require('socket.io')
 const http = require('http')
 const server = http.createServer(app)
@@ -53,7 +51,7 @@ io.on('connection', socket=>{
 	})
 
 	socket.on('chat_msg',(message)=>{
-		console.log(message)
+		console.log(req.session+"///"+message)
 	})
 })
 
