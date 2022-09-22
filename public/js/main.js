@@ -25,15 +25,7 @@ $('.change_chat_room').on('click', function()  {
 
 
 /*
-$.ajax({
-    url : '/change_chat_room',
-    type : 'POST',
-    data : {
-        'chat_room_id' : $(this).attr('id')
-    },success : function(data) {              
-        alert('Data: '+data);
-    }
-})
+
 */
 
 })

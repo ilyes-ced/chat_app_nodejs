@@ -7,6 +7,7 @@ const socketio = require('socket.io')
 const http = require('http')
 const server = http.createServer(app)
 const io = socketio(server)
+const chat_model = require('./models/Chat')
 
 
 
@@ -50,8 +51,17 @@ io.on('connection', socket=>{
 		io.emit('message', 'a user has left the chat')
 	})
 
-	socket.on('chat_msg',(message)=>{
-		console.log(req.session+"///"+message)
+	socket.on('chat_msg',async (message)=>{
+		/*
+		chat = new chat_model({
+			username: req.body.username,
+			email: req.body.email,
+			password: hash_password,
+			chat_rooms:["room 1","room 2"],
+		})
+		await chat.save()
+		*/
+		console.log("///"+message)
 	})
 })
 
