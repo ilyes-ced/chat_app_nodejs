@@ -1,16 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        './views/*.ejs'
+        './views/*.ejs',
+        './views/components/*.ejs'
     ],
     theme: {
         extend: {
             colors: {
-                'main': '#171923',
-                'secondary': '#252a37',
-                'the_red': '#ff2d20',
-                'icons': '#93939e',
-                'text_color': '#e7e8f2',
+                'primary': '#1d203e',
+                'secondary': '#2c2f48',
+                'tertiary': '#393d5e',
+                'light_purple': '#cba4ee',
+                'dark_purple': '#8060d4',
             },
         },
     },

@@ -5,44 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" type="text/css" href="public/css/app.css" />
+        <script src="/socket.io/socket.io.js" defer></script>
+        <script src="public/js/jq.js" defer></script>
+        <script src="public/js/main.js" defer></script>
     </head>
-    <body>
-
-<div class='flex flex-row h-full bg-purple-500'>
-    <aside class=" h-screen " aria-label="Sidebar">
-        <div class="h-full">
-            <button class='bg-red-600 w-[60px] h-[45px]'>fe</button>
-        </div>
-    </aside>
-    <div class='w-full flex flex-col'> 
-        <div id="chat_box" class='overflow-auto  h-full bg-green-600'>
-            texts here
-            <a href="/login">login</a>
-            <a href="/register">register</a>
-            <form action="/logout" method="post">
-                <button>logout</button>
-            </form>
-        </div>
-        <div class="bg-black">
-            <div class='p-[10px]'>
-                <!--<form action="sent_msg" method="post" class="flex flex-row">-->
-                    <input id="chat_input" type="text" class="bg-blue-600 h-[40px] pl-4 rounded-full w-1/2" placeholder="type">
-                    <button id="chat_submit" class="bg-blue-600 h-[40px] pl-4 rounded-full ">send</button>
-                <!--</form> -->
+    <body class='text-white bg-light_purple'>
+        <div class='flex flex-row h-full bg-[#1d203e]'>
+            <%- include('components/side_bar') %>
+            <div class='w-full flex flex-col'> 
+                <%- include('components/main_chat_box') %>
+                <%- include('components/bottom_bar') %>
             </div>
         </div>
-        </div>
-    </div>
-    
-
-<script src="/socket.io/socket.io.js"></script>
-
-<script src="public/js/jq.js"></script>
-<script src="public/js/main.js"></script>
-<script>
-    
-</script>
-</body>
+    </body>
 </html>
 
 
