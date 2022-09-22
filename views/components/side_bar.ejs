@@ -5,7 +5,7 @@
 
     <hr class="w-10 h-0.5 border-blue-800 bg-blue-800 self-center " />
 
-
-    <button class='my-2 mx-auto bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'>fe</button>
-
+    <% for (var i = 0; i < rooms.length; i++) { %>
+        <button id="<%= rooms[i] %>" class='change_chat_room my-2 mx-auto bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'><%= rooms[i] %></button>
+    <% } %>
 </aside>

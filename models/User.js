@@ -5,7 +5,7 @@ const user_schema= new schema({
     username: {type:String,required:true},
     email: {type:String,required:true},
     password: {type:String,required:true},
-    token: { type: String },
+    chat_rooms: [{type: String}],
 },{timestamps: true}) 
 
 const User = mongoose.model('User',user_schema)

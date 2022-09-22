@@ -67,6 +67,7 @@ app.use('/',pages_route)
 app.use('/login',pages_route)
 app.use('/register',pages_route)
 app.use('/logout',pages_route)
+app.use('/change_chat_room',pages_route)
 
 
 

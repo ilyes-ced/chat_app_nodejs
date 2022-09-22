@@ -17,3 +17,15 @@ $( "#chat_submit" ).on('click', () => {
 
 
 
+$('.change_chat_room').on('click', () => {
+    console.log($(this).attr('id'))
+    $.ajax({
+        url : '/change_chat_room',
+        type : 'POST',
+        data : {
+            'chat_room_id' : $(this).attr('id')
+        },success : function(data) {              
+            alert('Data: '+data);
+        }
+    })
+})
