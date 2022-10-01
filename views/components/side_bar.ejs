@@ -1,11 +1,16 @@
 <aside class="flex flex-col overflow-auto w-16  h-screen bg-secondary" aria-label="Sidebar">
-
-    <button class='my-2 mx-auto bg-tertiary w-12 h-12 border-2 rounded-full border-blue-500'>icon</button>
+    <div class="h-12 my-2 mx-auto">
+        <button class=' bg-tertiary w-12 h-12 border-2 rounded-full border-blue-500'>icon</button>
+    </div>
 
 
     <hr class="w-10 h-0.5 border-blue-800 bg-blue-800 self-center " />
-
-    <% for (var i = 0; i < rooms.length; i++) { %>
-        <button id="<%= rooms[i] %>" class='change_chat_room my-2 mx-auto bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'><%= rooms[i] %></button>
-    <% } %>
-</aside>
+    <div class="h-full flex flex-col justify-between mx-auto">
+        <div class="mx-auto flex flex-col justify-between "> 
+            <% for (var i = 0; i < rooms.length; i++) { %>
+                <button id="<%= rooms[i].id %>" class=' change_chat_room mt-2  bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'>room</button>
+            <% } %>
+        </div>
+        <button id="add_chat_room" class=' my-2 mx-auto bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'>+</button>
+    </div>
+</aside>   

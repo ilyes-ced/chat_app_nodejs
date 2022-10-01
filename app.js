@@ -52,15 +52,12 @@ io.on('connection', socket=>{
 	})
 
 	socket.on('chat_msg',async (message)=>{
-		/*
-		chat = new chat_model({
-			username: req.body.username,
-			email: req.body.email,
-			password: hash_password,
-			chat_rooms:["room 1","room 2"],
-		})
-		await chat.save()
-		*/
+		var kkk = message.split('/')
+		await chat_model.findOneAndUpdate(
+			{name : kkk[1]},
+			{$push: {chat_history: {user: '6336f32528b3dc1c40454425', message: kkk[0], CREATED_AT:Date.now()}}}
+		)
+		
 		console.log("///"+message)
 	})
 })

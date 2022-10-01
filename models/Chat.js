@@ -3,7 +3,7 @@ const schema = mongoose.Schema
 
 const chat_schema= new schema({
     name: {type:String,required:true},
-    members: [{id:{type:String}, usernameid:{type:String}}],
+    members: [{type:String}],
     chat_history: [Object],
 },{timestamps: true}) 
 

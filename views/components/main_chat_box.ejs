@@ -1,4 +1,13 @@
-<div id="chat_box" class='overflow-auto h-full bg-[#1d203e]'>
+
+<% for (var i = 0; i < rooms.length; i++) { %>
+    <% if(i==0){%> 
+        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms  overflow-auto h-full bg-[#1d203e] hidden'>
+    <%}else{%>
+        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms overflow-auto h-full bg-[#1d203e]'>
+    <%} %>
+
+
+
     <!--
     <a href="/login">login</a>
     <a href="/register">register</a>
@@ -6,15 +15,21 @@
         <button>logout</button>
     </form>
     -->
-    <div class="w-full flex flex-row align-center">
-        <div class="my-6 mx-2">
-            <img class="rounded-full h-10 w-10" src="public/images/img1.png" alt="">
-        </div>
-        <div>
-            <div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>text here</div>
 
+   
+        <div class="w-full  flex flex-row align-center " >
+      
+            <div class="my-6 mx-2">
+                <img class="rounded-full h-10 w-10" src="public/images/img1.png" alt="">
+            </div>
+            <div>
+                <div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>text here + <%= i %></div>
+    
+            </div>
         </div>
-    </div>
+ 
+
     
 </div>
 
+<% } %>     

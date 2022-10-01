@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -8,6 +9,11 @@
 
     </head>
     <body class='text-white bg-light_purple'>
+        <div  class="h-full w-full absolute hidden bg-[rgb(0,0,0,0.5)] flex items-center justify-center " id="add_chat_modal" >
+            <%- include('components/add_chat_modal') %>
+        </div>
+
+
         <div class='flex flex-row h-full bg-[#1d203e]'>
             <%- include('components/side_bar',rooms) %>
             <div class='w-full flex flex-col'> 
