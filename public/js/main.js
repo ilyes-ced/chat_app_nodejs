@@ -9,8 +9,9 @@ socket.on('message',message=>{
 
 
 
-
-
+$( "#close_add_chat_modal" ).on('click', function()  {
+    $("#add_chat_modal" ).addClass('hidden')
+})
 
 
 $( "#chat_submit" ).on('click', function()  {
@@ -36,6 +37,27 @@ $('#add_chat_room').on('click', function()  {
     $('#add_chat_modal').removeClass('hidden')
 })
 
+
+
+
+
+
+$('#searched_room').on('input', function()  {
+
+    var xhr = new XMLHttpRequest()
+    xhr.open("POST", "/search_rooms", true)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.send(JSON.stringify({query: $('#searched_room').val() }))
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            var jsonResponse = JSON.parse(xhr.responseText)
+            console.log(jsonResponse[0])
+            $('#searched_room').parent().append('<div class="m-4 p-2  border rounded-lg">'+jsonResponse[0].name+'</div>')
+        }
+    }
+
+})
 
 
 

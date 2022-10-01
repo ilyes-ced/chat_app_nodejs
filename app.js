@@ -8,12 +8,16 @@ const http = require('http')
 const server = http.createServer(app)
 const io = socketio(server)
 const chat_model = require('./models/Chat')
-
+const bodyParser = require('body-parser')
 
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname))
 app.use(express.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({
+	extended: true
+}))
+app.use(bodyParser.json())
 
 
 const mongoose = require('mongoose');
@@ -44,7 +48,7 @@ app.use(session({
 //socket.broadcast.emit()
 //io.emit()
 io.on('connection', socket=>{
-	console.log('it is working')
+	console.log(socket.request.session)
 	socket.emit('message', 'some string idk idk')
 	socket.broadcast.emit('message', 'he has joined the chat')
 	socket.on('disconnect', ()=>{
@@ -76,10 +80,15 @@ app.use('/change_chat_room',pages_route)
 
 
 
+app.post('/search_rooms', async (req, res)=>{
+	console.log(req.body.query)
+	var pp = await chat_model.find({name: {'$regex': req.body.query}})
+	console.log(pp)
+  	res.json(pp)
+})
 
 
 
-app.post('/sent_msg',async (req, res)=>{})
 
 
 
