@@ -8,8 +8,8 @@ const http = require('http')
 const server = http.createServer(app)
 const io = socketio(server)
 const chat_model = require('./models/Chat')
-const user_model = require('./models/User')
 const bodyParser = require('body-parser')
+
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname))
@@ -31,8 +31,7 @@ const store = new mongo_session({
 	collection: 'sessions_store',
 }) 
 
-
-const session_middleware = session({
+app.use(session({
 	secret: 'my_key',
 	resave: false,
 	saveUninitialized: false,
@@ -40,26 +39,16 @@ const session_middleware = session({
 	cookie: {
 		maxAge: 3600000*48 //2 days 
 	}
-})
-
-app.use(session_middleware)
+}))
 
 
-const wrap = middleware => (socket, next) => middleware(socket.request, {}, next)
-io.use(wrap(session_middleware))
-io.use((socket, next) => {
-	const ss = socket.request.session
-	if (ss && ss.is_auth){
-		next()
-	}else{
-		console.log('eroooooooooooooooor')
-	}
-})
+
+
 //socket.emit('message', 'some string idk idk')
 //socket.broadcast.emit()
 //io.emit()
 io.on('connection', socket=>{
-	console.log(socket.request.session.username)
+	console.log(socket.request.session)
 	socket.emit('message', 'some string idk idk')
 	socket.broadcast.emit('message', 'he has joined the chat')
 	socket.on('disconnect', ()=>{
@@ -67,16 +56,13 @@ io.on('connection', socket=>{
 	})
 
 	socket.on('chat_msg',async (message)=>{
-		var user_data = await user_model.findOne(
-			{_id : socket.request.session.user_id},
-		)
-		var message_object = {user: {username: user_data.username,pfp: "image"}, message: message.message, CREATED_AT:Date.now()}
+		var kkk = message.split('/')
 		await chat_model.findOneAndUpdate(
-			{_id : message.chat_room.split('_')[2]},
-			{$push: {chat_history: message_object}}
+			{name : kkk[1]},
+			{$push: {chat_history: {user: '6336f32528b3dc1c40454425', message: kkk[0], CREATED_AT:Date.now()}}}
 		)
-		socket.broadcast.emit('message', message_object)
-		//console.log(message)
+		
+		console.log("///"+message)
 	})
 })
 

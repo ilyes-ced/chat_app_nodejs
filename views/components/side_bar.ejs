@@ -8,7 +8,7 @@
     <div class="h-full flex flex-col justify-between mx-auto">
         <div class="mx-auto flex flex-col justify-between "> 
             <% for (var i = 0; i < rooms.length; i++) { %>
-                <button id="<%= rooms[i].id %>" class=' change_chat_room mt-2  bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'>room</button>
+                <button id="<%= rooms[i].id %>" class=' change_chat_room mt-2  bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'><%= rooms[i].name %></button>
             <% } %>
         </div>
         <button id="add_chat_room" class=' my-2 mx-auto bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'>+</button>

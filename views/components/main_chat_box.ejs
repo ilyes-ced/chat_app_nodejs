@@ -1,35 +1,30 @@
 
 <% for (var i = 0; i < rooms.length; i++) { %>
     <% if(i==0){%> 
-        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms  overflow-auto h-full bg-[#1d203e] hidden'>
+        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms overflow-auto h-full bg-[#1d203e] '>
     <%}else{%>
-        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms overflow-auto h-full bg-[#1d203e]'>
+        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms overflow-auto h-full bg-[#1d203e] hidden'>
     <%} %>
 
 
 
-    <!--
+    
     <a href="/login">login</a>
     <a href="/register">register</a>
     <form action="/logout" method="post">
         <button>logout</button>
     </form>
-    -->
+    
 
-   
+    <% for (var j = 0; j < rooms[i].chat_history.length; j++) { %>
         <div class="w-full  flex flex-row align-center " >
-      
             <div class="my-6 mx-2">
                 <img class="rounded-full h-10 w-10" src="public/images/img1.png" alt="">
             </div>
             <div>
-                <div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>text here + <%= i %></div>
-    
+                <div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '><%= rooms[i].chat_history[j].message %></div>
             </div>
         </div>
- 
-
-    
-</div>
-
+    <%} %>
+    </div>
 <% } %>     

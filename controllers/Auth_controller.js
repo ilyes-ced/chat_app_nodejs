@@ -15,6 +15,7 @@ const login = async (req, res)=>{
 	req.session.is_auth = true
 	req.session.username = user.username
 	req.session.email = req.body.email
+	req.session.user_id = user.id
 	res.redirect('/')
 }
 

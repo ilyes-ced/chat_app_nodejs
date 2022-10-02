@@ -1,4 +1,4 @@
-<div  class="h-full w-full absolute hidden bg-[rgb(0,0,0,0.5)] flex items-center justify-center " id="add_chat_modal" >
+<div  class="h-full w-full absolute hidden bg-[rgb(0,0,0,0.5)] flex items-center justify-center " id="create_chat_modal" >
     <div tabindex="-1" aria-hidden="true" class=" overflow-y-auto overflow-x-hidden absolute  z-50 h-modal justify-center items-center">
       <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
           <!-- Modal content -->
@@ -8,21 +8,20 @@
                   <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                       Terms of Service
                   </h3>
-                  <button id="close_add_chat_modal" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
+                  <button id="close_create_chat_modal" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
                       X
                   </button>
               </div>
               <!-- Modal body -->
               <div>
-                <input id="searched_room" type="text" placeholder="Search ...." class="m-4 p-2  border rounded-lg">
-                <div id="recommendations">
-
-                </div>
+                <input id="new_created_room" type="text" placeholder="Chat room name" class="m-4 p-2  border rounded-lg">
+                
               </div>
               
               <!-- Modal footer -->
               <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                  <button id="create_new_chat_room" class="border p-2 rounded-lg">create new chat room</button>
+                  <button id="searched_room_modal"  class="border p-2 rounded-lg">search</button>
+                  <button id="create_new_chat_room_submit" class="border p-2 rounded-lg">create new chat room</button>
               </div>
           </div>
       </div>
