@@ -16,9 +16,13 @@ mongoose.connect(mongo_uri, {
 
 
 router.get('/', is_auth_middleware, async (req, res) => {
-	//console.log(req.session)
+	console.log(req.session)
+    console.log('//////////////////////////////////////////////////////////')
     var user = await user_model.findOne({email:req.session.email})
-    var rooms = await chat_model.find({id:{$in: user.chat_rooms}})
+	console.log(user.chat_rooms)
+    console.log('//////////////////////////////////////////////////////////')
+    var rooms = await chat_model.find({_id:{$in: user.chat_rooms}})
+	console.log(rooms)
     res.render('home_page',{rooms:rooms})
 })
 

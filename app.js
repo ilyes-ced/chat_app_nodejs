@@ -59,23 +59,37 @@ io.use((socket, next) => {
 //socket.broadcast.emit()
 //io.emit()
 io.on('connection', socket=>{
-	console.log(socket.request.session.username)
 	socket.emit('message', 'some string idk idk')
 	socket.broadcast.emit('message', 'he has joined the chat')
 	socket.on('disconnect', ()=>{
 		io.emit('message', 'a user has left the chat')
 	})
+	var pp = async ()=>{
+		var kk = await user_model.findOne({_id : socket.request.session.user_id})	
+		kk.chat_rooms.forEach(element => {
+			socket.join(element)
+		});
+	}
+	pp()
 
+
+	
 	socket.on('chat_msg',async (message)=>{
+		console.log('starting')
+		console.log(message)
 		var user_data = await user_model.findOne(
 			{_id : socket.request.session.user_id},
 		)
-		var message_object = {user: {username: user_data.username,pfp: "image"}, message: message.message, CREATED_AT:Date.now()}
+		var message_object = {user: user_data.id, message: message.message, CREATED_AT:Date.now()}
+		console.log(message_object)
 		await chat_model.findOneAndUpdate(
-			{_id : message.chat_room.split('_')[2]},
+			{_id : message.chat_room},
 			{$push: {chat_history: message_object}}
 		)
-		socket.broadcast.emit('message', message_object)
+		var message_object = {user: {username: user_data.username,pfp: "image"}, message: message.message, CREATED_AT:Date.now(), chat_room: message.chat_room}
+		console.log(message_object)
+		
+		socket.to(message.chat_room).emit('message', message_object)
 		//console.log(message)
 	})
 })

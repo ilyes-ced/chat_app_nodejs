@@ -4,6 +4,7 @@ const schema = mongoose.Schema
 const user_schema= new schema({
     username: {type:String,required:true},
     email: {type:String,required:true},
+    pfp: {type:String,default:'default.jpg'},
     password: {type:String,required:true},
     chat_rooms: [{type: String}],
 },{timestamps: true}) 
