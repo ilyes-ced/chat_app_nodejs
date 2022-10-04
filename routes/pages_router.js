@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongo_uri = 'mongodb://localhost:27017/test'
 const auth_controller = require('../controllers/Auth_controller')
+const chat_controller = require('../controllers/Chat_controller')
 const is_auth_middleware = require("../middleware/is_auth_middleware")
 const chat_model = require('../models/Chat')
 const user_model = require('../models/User')
@@ -16,13 +17,8 @@ mongoose.connect(mongo_uri, {
 
 
 router.get('/', is_auth_middleware, async (req, res) => {
-	console.log(req.session)
-    console.log('//////////////////////////////////////////////////////////')
     var user = await user_model.findOne({email:req.session.email})
-	console.log(user.chat_rooms)
-    console.log('//////////////////////////////////////////////////////////')
     var rooms = await chat_model.find({_id:{$in: user.chat_rooms}})
-	console.log(rooms)
     res.render('home_page',{rooms:rooms})
 })
 
@@ -43,9 +39,9 @@ router.post('/logout',auth_controller.logout)
 
 
 
-router.post('/change_chat_room',(req,res)=>{
-    console.log(req.body)
-})
+router.post('/search_rooms',chat_controller.search_chat)
+router.post('/create_chat_room',chat_controller.create_chat_room)
+router.post('/join_chat',chat_controller.join_chat)
 
 
 module.exports = router

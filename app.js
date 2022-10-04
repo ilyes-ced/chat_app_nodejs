@@ -73,23 +73,26 @@ io.on('connection', socket=>{
 	pp()
 
 
+	socket.on('is_typing',async (message)=>{
+		var user_data = await user_model.findOne(
+			{_id : socket.request.session.user_id},
+		)
+		socket.to(message).emit('user_is_typing', {user:user_data.username, chat_room:message})
+	})
+
 	
 	socket.on('chat_msg',async (message)=>{
-		console.log('starting')
-		console.log(message)
 		var user_data = await user_model.findOne(
 			{_id : socket.request.session.user_id},
 		)
 		var message_object = {user: user_data.id, message: message.message, CREATED_AT:Date.now()}
-		console.log(message_object)
 		await chat_model.findOneAndUpdate(
 			{_id : message.chat_room},
 			{$push: {chat_history: message_object}}
 		)
-		var message_object = {user: {username: user_data.username,pfp: "image"}, message: message.message, CREATED_AT:Date.now(), chat_room: message.chat_room}
+		message_object = {username: user_data.username,pfp: "default.jpg", message: message.message, CREATED_AT:Date.now(), chat_room: message.chat_room}
 		console.log(message_object)
-		
-		socket.to(message.chat_room).emit('message', message_object)
+		io.in(message.chat_room).emit('message', message_object)
 		//console.log(message)
 	})
 })
@@ -105,27 +108,9 @@ app.use('/login',pages_route)
 app.use('/register',pages_route)
 app.use('/logout',pages_route)
 app.use('/change_chat_room',pages_route)
-
-
-
-app.post('/search_rooms', async (req, res)=>{
-	if(!req.body.query == ''){
-		var pp = await chat_model.find({name: {'$regex': req.body.query}})
-  		res.json(pp)
-	}
-})
-
-app.post('/create_chat_room', async (req, res)=>{
-	console.log(req.session)
-	var chat_room = new chat_model({
-		name: req.body.query,
-		members: [req.session.user_id],
-	})
-	await chat_room.save()
-	res.json('succsess')
-})
-
-
+app.post('/search_rooms', pages_route)
+app.post('/create_chat_room',  pages_route)
+app.post('/join_chat',  pages_route)
 
 
 server.listen(3000);

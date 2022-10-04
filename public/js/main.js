@@ -1,23 +1,35 @@
-var current_chat_room = $('.all_chat_rooms').first().attr('id').split('_')[2]
+const socket = io()
 
+var current_chat_room = $('.all_chat_rooms').first().attr('id').split('_')[2]
 $(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
 
 
-const socket = io()
+$('#chat_input').on('input', function()  {
+    socket.emit('is_typing', current_chat_room)
+})
+
 socket.on('message',(message)=>{
+    console.log(message)
     if(!$('#chat_room_'+message.chat_room).hasClass('hidden')){
-        $('#chat_room_'+message.chat_room).append("<div class='my-4 mx-2 p-4  rounded-lg  bg-tertiary '>by:"+JSON.stringify(message.user)+"<br/> message:"+message.message+" in chat room"+message.chat_room+"</div>")
+        $('#chat_room_'+message.chat_room).append("<div class='w-full  flex flex-row align-center ' ><div class='my-6 mx-2'><img class='rounded-full h-10 w-10' src=public/images/"+message.pfp+"'  alt=''></div><div><div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>"+message.message+"</div></div></div>")
+        console.log('if')
         $("#chat_room_"+message.chat_room).scrollTop($(".all_chat_rooms")[0].scrollHeight);
     }else{
+        console.log('else')
         $('#'+message.chat_room).css({'background-color': 'green'})
-        $('#chat_room_'+message.chat_room).append("<div class='my-4 mx-2 p-4  rounded-lg  bg-tertiary '>by:"+JSON.stringify(message.user)+"<br/> message:"+message.message+" in chat room"+message.chat_room+"</div>")
+        $('#chat_room_'+message.chat_room).append("<div class='w-full  flex flex-row align-center ' ><div class='my-6 mx-2'><img class='rounded-full h-10 w-10' src=public/images/"+message.pfp+"'  alt=''></div><div><div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>"+message.message+"</div></div></div>")
         $("#chat_room_"+message.chat_room).scrollTop($(".all_chat_rooms")[0].scrollHeight);
     }
 })
 
 
-socket.on('room_test',(message)=>{
-    alert('regege')
+socket.on('user_is_typing',(message)=>{
+    if(!($('#is_typing_div').length)){
+        setTimeout(function(){
+            $('#chat_room_'+message.chat_room).append('<div id="is_typing_div" class="w-full bg-blue-600 text-center">'+message.user+' is typing</div>')
+            $(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
+        }, 3000)
+    }
 })
 
 $( "#close_add_chat_modal" ).on('click', function()  {
@@ -31,7 +43,6 @@ $( "#close_create_chat_modal" ).on('click', function()  {
 
 $( "#chat_submit" ).on('click', function()  {
     socket.emit('chat_msg', {message: $('#chat_input').val(),chat_room: current_chat_room})
-    //$('.all_chat_rooms').append('<div class="w-full flex flex-row align-center"><div class="my-6 mx-2"><img class="rounded-full h-10 w-10" src="public/images/img1.png" alt=""></div><div><div class="my-4 mx-2 p-4 rounded-lg w-full bg-tertiary ">'+$('#chat_input').val()+'</div></div></div>')
     $('#chat_input').val('')
     $(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
 
@@ -67,7 +78,9 @@ $('#searched_room_modal').on('click', function()  {
 
 
 $('#searched_room').on('input', function()  {
-
+    if($('#searched_room').val()==''){
+        $('#recommendations').html('')
+    }
     var xhr = new XMLHttpRequest()
     xhr.open("POST", "/search_rooms", true)
     xhr.setRequestHeader('Content-Type', 'application/json')
@@ -76,8 +89,19 @@ $('#searched_room').on('input', function()  {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             var jsonResponse = JSON.parse(xhr.responseText)
-            console.log(jsonResponse[0])
-            $('#recommendations').html('<div class="m-4 p-2  border rounded-lg">'+jsonResponse[0].name+'</div>')
+            console.log(jsonResponse.length)
+            if(jsonResponse.length==0){
+                $('#recommendations').html('')
+            }
+            jsonResponse.forEach(element => {
+                if(!($('#recommendations').find('#search_'+element._id).length)){
+                    $('#recommendations').append('<div id="search_'+element._id+'" class="added_searched_element cursor-pointer  m-4 p-2 hover:bg-blue-800 border rounded-lg">'+element.name+'</div>')
+                }
+            });
+            /*
+            for(let i=0; i<jsonResponse.lenght ;i++){
+                $('#recommendations').appendTo('<div class="m-4 p-2  border rounded-lg">'+jsonResponse[0].name+'</div>')
+            }*/
         }
     }
 
@@ -94,8 +118,13 @@ $('#create_new_chat_room_submit').on('click', function()  {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             var jsonResponse = JSON.parse(xhr.responseText)
-            console.log(jsonResponse[0])
-            $('#recommendations').html('<div class="m-4 p-2  border rounded-lg">'+jsonResponse[0].name+'</div>')
+            if(jsonResponse == 'succsess'){
+                $('#create_chat_modal').addClass('hidden')       
+                $('body').prepend('<div id="to_be_hidden" class="h-full w-full absolute bg-[rgb(0,0,0,0.5)] flex items-center justify-center "  ><div tabindex="-1" aria-hidden="true" class=" overflow-y-auto overflow-x-hidden absolute  z-50 h-modal justify-center items-center">created succsuflyy</div></div>')
+                setTimeout(function(){
+                    $('#to_be_hidden').remove()
+                }, 2000)
+            }
         }
     }
 
@@ -105,4 +134,33 @@ $('#create_new_chat_room_submit').on('click', function()  {
 
 
 
+
+$('body').on('click','.added_searched_element', function()  {
+    var xhr = new XMLHttpRequest()
+    xhr.open("POST", "/join_chat", true)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.send(JSON.stringify({query: $(this).attr('id') }))
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            var jsonResponse = JSON.parse(xhr.responseText)
+            console.log(jsonResponse[0])
+            if(jsonResponse == 'succsess'){
+                alert(jsonResponse)
+            }
+        }
+    }
+
+})
+
+
+
+
+
+
+$(document).keyup(function(event){
+    if($('#chat_input').is(':focus') && event.key == "Enter"){
+        $('#chat_submit').trigger('click')    
+    }
+})
 
