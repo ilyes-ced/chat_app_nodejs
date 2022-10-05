@@ -41,7 +41,6 @@ const register = async (req, res)=>{
 
 
 const logout = async (req, res)=>{
-    console.log('logout auth')
 	req.session.destroy((err)=>{
 		if(err) throw err
 		res.redirect('/')

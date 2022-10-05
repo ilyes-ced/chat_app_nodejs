@@ -3,19 +3,30 @@ if($('.all_chat_rooms').length){
     var current_chat_room = $('.all_chat_rooms').first().attr('id').split('_')[2]
     $(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
 }
+var my_rooms = []
 
+
+$('.change_chat_room').each(function(){
+    my_rooms.push($(this).attr('id'))
+})
+
+function timeoutFunction() {
+    socket.emit("stopped_typing", current_chat_room);
+  }
+
+var timeout
 $('#chat_input').on('input', function()  {
-    socket.emit('is_typing', current_chat_room)
+    socket.emit('is_typing', current_chat_room);
+    clearTimeout(timeout)
+    timeout = setTimeout(timeoutFunction, 2000)
 })
 
 socket.on('message',(message)=>{
     console.log(message)
     if(!$('#chat_room_'+message.chat_room).hasClass('hidden')){
         $('#chat_room_'+message.chat_room).append('<div class="w-full  flex flex-row align-center " ><div class="my-6 mx-2"><img class="rounded-full h-10 w-10" src="public/images/'+message.pfp+'" alt=""></div><div><div class="my-4 mx-2 p-4 rounded-lg w-full bg-tertiary"><div class="text-sm text-gray-400">'+message.username+'</div><div>'+message.message+'</div></div></div></div>')
-        console.log('if')
         $("#chat_room_"+message.chat_room).scrollTop($(".all_chat_rooms")[0].scrollHeight);
     }else{
-        console.log('else')
         $('#'+message.chat_room).css({'background-color': 'green'})
         $('#chat_room_'+message.chat_room).append("<div class='w-full  flex flex-row align-center ' ><div class='my-6 mx-2'><img class='rounded-full h-10 w-10' src=public/images/"+message.pfp+"'  alt=''></div><div><div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>"+message.message+"</div></div></div>")
         $("#chat_room_"+message.chat_room).scrollTop($(".all_chat_rooms")[0].scrollHeight);
@@ -24,12 +35,14 @@ socket.on('message',(message)=>{
 
 
 socket.on('user_is_typing',(message)=>{
-    if(!($('#is_typing_div').length)){
-        setTimeout(function(){
-            $('#chat_room_'+message.chat_room).append('<div id="is_typing_div" class="w-full bg-blue-600 text-center">'+message.user+' is typing</div>')
-            $(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
-        }, 3000)
+    if (message.status) {
+        if(!($('.is_typing_div').length))
+        $('#chat_room_'+message.chat_room).append('<div class="is_typing_div w-full bg-red-600 text-center">'+message.user+' is typing</div>')
+        $(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
+    }else{
+        $('.is_typing_div').remove()
     }
+
 })
 
 $( "#close_add_chat_modal" ).on('click', function()  {
@@ -95,8 +108,13 @@ $('#searched_room').on('input', function()  {
             }
             jsonResponse.forEach(element => {
                 if(!($('#recommendations').find('#search_'+element._id).length)){
-                    console.log(element)
-                    $('#recommendations').append('<div id="search_'+element._id+'" class="added_searched_element cursor-pointer  m-4 p-2 hover:bg-blue-800 border rounded-lg">'+element.name+'</div>')
+                    if(my_rooms.includes(element._id)){
+                        $('#recommendations').append('<div id="search_'+element._id+'" class="added_searched_element cursor-pointer  m-4 p-2 hover:bg-blue-800 border rounded-lg">'+element.name+' / already joined</div>')
+
+                    }else{           
+                        $('#recommendations').append('<div id="search_'+element._id+'" class="added_searched_element cursor-pointer  m-4 p-2 hover:bg-blue-800 border rounded-lg">'+element.name+'</div>')
+
+                    }
                 }
             });
             /*
@@ -127,6 +145,10 @@ $('#create_new_chat_room_submit').on('click', function()  {
                 }, 2000)
             }else if(jsonResponse == "failure"){
                 alert('failed')
+            }else if(jsonResponse == "exists"){
+                if(!($('#it_exists').length)){
+                    $('#new_created_room').after('<div id="it_exists" class="text-center text-red-400">it exists</div>')
+                }
             }
         }
     }

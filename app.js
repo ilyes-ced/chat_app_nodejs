@@ -71,13 +71,17 @@ io.on('connection', socket=>{
 		});
 	}
 	pp()
-
+	
+	socket.on('stopped_typing',async (message)=>{
+		socket.to(message).emit('user_is_typing', {chat_room:message, status:false})
+	})
 
 	socket.on('is_typing',async (message)=>{
+		console.log(message)
 		var user_data = await user_model.findOne(
 			{_id : socket.request.session.user_id},
 		)
-		socket.to(message).emit('user_is_typing', {user:user_data.username, chat_room:message})
+		socket.to(message).emit('user_is_typing', {user:user_data.username, chat_room:message, status:true})
 	})
 
 	
@@ -93,7 +97,6 @@ io.on('connection', socket=>{
 		message_object = {username: user_data.username,pfp: "default.jpg", message: message.message, CREATED_AT:Date.now(), chat_room: message.chat_room}
 		console.log(message_object)
 		io.in(message.chat_room).emit('message', message_object)
-		//console.log(message)
 	})
 })
 

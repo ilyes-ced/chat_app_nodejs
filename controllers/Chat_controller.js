@@ -16,6 +16,11 @@ const search_chat = async (req, res)=>{
 
 const create_chat_room = async (req, res)=>{
 	try{
+		const exists = await chat_model.exists({name :req.body.query})
+		if(exists){
+			res.json('exists')
+			return
+		}
 		var chat_room = new chat_model({
 			name: req.body.query,
 			members: [req.session.user_id],
