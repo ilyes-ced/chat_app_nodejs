@@ -22,10 +22,27 @@
                 <img class="rounded-full h-10 w-10" src="public/images/default.jpg" alt="">
             </div>
             <div>
-                <div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '><%= rooms[i].chat_history[j].message %></div>
+                <div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>
+                    <div class="text-sm text-gray-400">
+                        <% for (var k = 0; k < users.length; k++) { %>
+                            <% if(users[k].id == rooms[i].chat_history[j].user){%> 
+                                <%= users[k].username %>
+                            <%} %>
+                        <%} %>
+
+                    </div>
+                    <div>
+                        <%= rooms[i].chat_history[j].message %>
+                    </div>
+                </div>
             </div>
         </div>
     <%} %>
     </div>
 <% } %>     
+
+
+
+
+
 

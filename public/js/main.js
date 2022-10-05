@@ -1,8 +1,8 @@
 const socket = io()
-
-var current_chat_room = $('.all_chat_rooms').first().attr('id').split('_')[2]
-$(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
-
+if($('.all_chat_rooms').length){
+    var current_chat_room = $('.all_chat_rooms').first().attr('id').split('_')[2]
+    $(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
+}
 
 $('#chat_input').on('input', function()  {
     socket.emit('is_typing', current_chat_room)
@@ -11,7 +11,7 @@ $('#chat_input').on('input', function()  {
 socket.on('message',(message)=>{
     console.log(message)
     if(!$('#chat_room_'+message.chat_room).hasClass('hidden')){
-        $('#chat_room_'+message.chat_room).append("<div class='w-full  flex flex-row align-center ' ><div class='my-6 mx-2'><img class='rounded-full h-10 w-10' src=public/images/"+message.pfp+"'  alt=''></div><div><div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>"+message.message+"</div></div></div>")
+        $('#chat_room_'+message.chat_room).append('<div class="w-full  flex flex-row align-center " ><div class="my-6 mx-2"><img class="rounded-full h-10 w-10" src="public/images/'+message.pfp+'" alt=""></div><div><div class="my-4 mx-2 p-4 rounded-lg w-full bg-tertiary"><div class="text-sm text-gray-400">'+message.username+'</div><div>'+message.message+'</div></div></div></div>')
         console.log('if')
         $("#chat_room_"+message.chat_room).scrollTop($(".all_chat_rooms")[0].scrollHeight);
     }else{
@@ -95,6 +95,7 @@ $('#searched_room').on('input', function()  {
             }
             jsonResponse.forEach(element => {
                 if(!($('#recommendations').find('#search_'+element._id).length)){
+                    console.log(element)
                     $('#recommendations').append('<div id="search_'+element._id+'" class="added_searched_element cursor-pointer  m-4 p-2 hover:bg-blue-800 border rounded-lg">'+element.name+'</div>')
                 }
             });
@@ -124,6 +125,8 @@ $('#create_new_chat_room_submit').on('click', function()  {
                 setTimeout(function(){
                     $('#to_be_hidden').remove()
                 }, 2000)
+            }else if(jsonResponse == "failure"){
+                alert('failed')
             }
         }
     }
@@ -147,6 +150,8 @@ $('body').on('click','.added_searched_element', function()  {
             console.log(jsonResponse[0])
             if(jsonResponse == 'succsess'){
                 alert(jsonResponse)
+            }else if(jsonResponse == "failure"){
+                alert('failed')
             }
         }
     }
@@ -164,3 +169,10 @@ $(document).keyup(function(event){
     }
 })
 
+
+
+$(document).keyup(function(event){
+    if($('#new_created_room').is(':focus') && event.key == "Enter"){
+        $('#create_new_chat_room_submit').trigger('click')    
+    }
+})

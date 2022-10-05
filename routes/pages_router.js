@@ -19,7 +19,13 @@ mongoose.connect(mongo_uri, {
 router.get('/', is_auth_middleware, async (req, res) => {
     var user = await user_model.findOne({email:req.session.email})
     var rooms = await chat_model.find({_id:{$in: user.chat_rooms}})
-    res.render('home_page',{rooms:rooms})
+    var users_array = []
+    rooms.forEach(  (element) => {
+        users_array = users_array.concat(element.members)
+    })
+    var users = await user_model.find({_id:{$in: users_array}}).select('username pfp')
+    console.log(users)
+    res.render('home_page',{rooms:rooms, users:users})
 })
 
 router.get('/login',(req, res) => {
