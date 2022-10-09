@@ -6,7 +6,7 @@
 
     <hr class="w-10 h-0.5 border-blue-800 bg-blue-800 self-center " />
     <div class="h-full flex flex-col justify-between mx-auto">
-        <div class="mx-auto flex flex-col justify-between "> 
+        <div id="to_add_button_side" class="mx-auto flex flex-col justify-between "> 
             <% for (var i = 0; i < rooms.length; i++) { %>
                 <button id="<%= rooms[i].id %>" class=' change_chat_room mt-2  bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'><%= rooms[i].name %></button>
             <% } %>

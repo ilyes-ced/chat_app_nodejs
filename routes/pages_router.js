@@ -17,15 +17,21 @@ mongoose.connect(mongo_uri, {
 
 
 router.get('/', is_auth_middleware, async (req, res) => {
-    var user = await user_model.findOne({email:req.session.email})
-    var rooms = await chat_model.find({_id:{$in: user.chat_rooms}})
-    var users_array = []
-    rooms.forEach(  (element) => {
-        users_array = users_array.concat(element.members)
-    })
-    var users = await user_model.find({_id:{$in: users_array}}).select('username pfp')
-    console.log(users)
-    res.render('home_page',{rooms:rooms, users:users})
+    try{
+        var user = await user_model.findOne({email:req.session.email})
+        var rooms = await chat_model.find({_id:{$in: user.chat_rooms}})
+        users_obj = {}
+        var users_array = []
+        rooms.forEach(  (element) => {
+            users_array = users_array.concat(element.members)
+        })
+        var users = await user_model.find({_id:{$in: users_array}}).select('username pfp')
+        users.forEach(  (element) => {
+            users_obj[element._id] = {username: element.username, pfp: element.pfp}
+        })
+        res.render('home_page',{rooms:rooms, users:users_obj})
+    }catch{
+    }
 })
 
 router.get('/login',(req, res) => {

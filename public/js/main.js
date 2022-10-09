@@ -22,7 +22,6 @@ $('#chat_input').on('input', function()  {
 })
 
 socket.on('message',(message)=>{
-    console.log(message)
     if(!$('#chat_room_'+message.chat_room).hasClass('hidden')){
         $('#chat_room_'+message.chat_room).append('<div class="w-full  flex flex-row align-center " ><div class="my-6 mx-2"><img class="rounded-full h-10 w-10" src="public/images/'+message.pfp+'" alt=""></div><div><div class="my-4 mx-2 p-4 rounded-lg w-full bg-tertiary"><div class="text-sm text-gray-400">'+message.username+'</div><div>'+message.message+'</div></div></div></div>')
         $("#chat_room_"+message.chat_room).scrollTop($(".all_chat_rooms")[0].scrollHeight);
@@ -55,6 +54,7 @@ $( "#close_create_chat_modal" ).on('click', function()  {
 
 
 $( "#chat_submit" ).on('click', function()  {
+    socket.emit("stopped_typing", current_chat_room); 
     socket.emit('chat_msg', {message: $('#chat_input').val(),chat_room: current_chat_room})
     $('#chat_input').val('')
     $(".all_chat_rooms").scrollTop($(".all_chat_rooms")[0].scrollHeight);
@@ -63,7 +63,7 @@ $( "#chat_submit" ).on('click', function()  {
 
 
 
-$('.change_chat_room').on('click', function()  {
+$('body').on('click', '.change_chat_room', function()  {
     $('.all_chat_rooms').addClass('hidden')
     $('#chat_room_'+$(this).attr('id')).removeClass('hidden')
     current_chat_room = $(this).attr('id')
@@ -102,7 +102,6 @@ $('#searched_room').on('input', function()  {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             var jsonResponse = JSON.parse(xhr.responseText)
-            console.log(jsonResponse.length)
             if(jsonResponse.length==0){
                 $('#recommendations').html('')
             }
@@ -137,12 +136,15 @@ $('#create_new_chat_room_submit').on('click', function()  {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             var jsonResponse = JSON.parse(xhr.responseText)
-            if(jsonResponse == 'succsess'){
+            if(jsonResponse !== 'failure' && jsonResponse !== "exists"){
                 $('#create_chat_modal').addClass('hidden')       
                 $('body').prepend('<div id="to_be_hidden" class="h-full w-full absolute bg-[rgb(0,0,0,0.5)] flex items-center justify-center "  ><div tabindex="-1" aria-hidden="true" class=" overflow-y-auto overflow-x-hidden absolute  z-50 h-modal justify-center items-center">created succsuflyy</div></div>')
                 setTimeout(function(){
                     $('#to_be_hidden').remove()
                 }, 2000)
+                $('body').prepend("<div id='chat_room_"+jsonResponse.id+"'' class='all_chat_rooms overflow-auto h-full bg-[#1d203e] hidden'></div>")
+                $('#to_add_button_side').append("<button id='"+jsonResponse.id+"' class=' change_chat_room mt-2  bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'>name here</button>")
+                socket.emit("joined_this_room", jsonResponse.id);
             }else if(jsonResponse == "failure"){
                 alert('failed')
             }else if(jsonResponse == "exists"){
@@ -169,7 +171,6 @@ $('body').on('click','.added_searched_element', function()  {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             var jsonResponse = JSON.parse(xhr.responseText)
-            console.log(jsonResponse[0])
             if(jsonResponse == 'succsess'){
                 alert(jsonResponse)
             }else if(jsonResponse == "failure"){
@@ -198,3 +199,22 @@ $(document).keyup(function(event){
         $('#create_new_chat_room_submit').trigger('click')    
     }
 })
+
+
+
+
+
+
+$('#add_chat_modal').on('click', function(event)  {
+    if(event.target == this){
+        $(this).addClass('hidden')
+    }
+})
+
+$('#create_chat_modal').on('click', function(event)  {
+    if(event.target == this){
+        $(this).addClass('hidden')
+    }
+})
+
+

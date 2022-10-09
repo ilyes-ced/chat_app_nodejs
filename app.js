@@ -77,7 +77,6 @@ io.on('connection', socket=>{
 	})
 
 	socket.on('is_typing',async (message)=>{
-		console.log(message)
 		var user_data = await user_model.findOne(
 			{_id : socket.request.session.user_id},
 		)
@@ -85,6 +84,9 @@ io.on('connection', socket=>{
 	})
 
 	
+	socket.on('joined_this_room',async (message)=>{
+		socket.join(message)
+	})
 	socket.on('chat_msg',async (message)=>{
 		var user_data = await user_model.findOne(
 			{_id : socket.request.session.user_id},
@@ -94,8 +96,7 @@ io.on('connection', socket=>{
 			{_id : message.chat_room},
 			{$push: {chat_history: message_object}}
 		)
-		message_object = {username: user_data.username,pfp: "default.jpg", message: message.message, CREATED_AT:Date.now(), chat_room: message.chat_room}
-		console.log(message_object)
+		message_object = {username: user_data.username,pfp: user_data.pfp, message: message.message, CREATED_AT:Date.now(), chat_room: message.chat_room}
 		io.in(message.chat_room).emit('message', message_object)
 	})
 })

@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 
 const login = async (req, res)=>{
 	const user = await user_model.findOne({email:req.body.email})
-	if(!user) return redirect("/login")
+	if(!user) return res.redirect("/login")
 	console.log(req.body.password)
 	console.log(user.password)
 	const matched = await bcrypt.compare(req.body.password, user.password)

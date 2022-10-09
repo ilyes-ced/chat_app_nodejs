@@ -14,22 +14,23 @@
     <form action="/logout" method="post">
         <button>logout</button>
     </form>
-    
+    <% if(rooms[i].chat_history.length==0){%> 
+        <div class="h-full w-full flex items-center justify-center">
+            <div class="rounded-lg bg-tertiary p-6">
+                no messages in this chat yet
+            </div>
+        </div>
+    <%}%>
 
     <% for (var j = 0; j < rooms[i].chat_history.length; j++) { %>
         <div class="w-full  flex flex-row align-center " >
             <div class="my-6 mx-2">
-                <img class="rounded-full h-10 w-10" src="public/images/default.jpg" alt="">
+                <img class="rounded-full h-10 w-10" src="public/images/<%= users_obj[rooms[i].chat_history[j].user].pfp %>" alt="">
             </div>
             <div>
                 <div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>
                     <div class="text-sm text-gray-400">
-                        <% for (var k = 0; k < users.length; k++) { %>
-                            <% if(users[k].id == rooms[i].chat_history[j].user){%> 
-                                <%= users[k].username %>
-                            <%} %>
-                        <%} %>
-
+                        <%= users_obj[rooms[i].chat_history[j].user].username %>
                     </div>
                     <div>
                         <%= rooms[i].chat_history[j].message %>
