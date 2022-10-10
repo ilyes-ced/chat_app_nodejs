@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const session = require('express-session')
 const mongo_session = require('connect-mongodb-session')(session)
-const mongo_uri = 'mongodb://localhost:27017/test'
+const mongo_uri = 'mongodb://localhost:27017/chat'
 const socketio = require('socket.io')
 const http = require('http')
 const server = http.createServer(app)
@@ -96,7 +96,7 @@ io.on('connection', socket=>{
 			{_id : message.chat_room},
 			{$push: {chat_history: message_object}}
 		)
-		message_object = {username: user_data.username,pfp: user_data.pfp, message: message.message, CREATED_AT:Date.now(), chat_room: message.chat_room}
+		message_object = {username: user_data.username,pfp: user_data.pfp,color: user_data.color, message: message.message, CREATED_AT:Date.now(), chat_room: message.chat_room}
 		io.in(message.chat_room).emit('message', message_object)
 	})
 })

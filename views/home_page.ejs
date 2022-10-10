@@ -11,7 +11,11 @@
     <body class='text-white bg-light_purple'>
 
         <%- include('components/add_chat_modal') %>
-        <%- include('components/create_chat_modal') %>
+        <% if(!empty){ %>
+            <%- include('components/create_chat_modal') %>
+        <%}else{%>
+            it is no rooms
+        <%}%>
 
         <div class='flex flex-row h-full bg-[#1d203e]'>
             <%- include('components/side_bar',rooms) %>

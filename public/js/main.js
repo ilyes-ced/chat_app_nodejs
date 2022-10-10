@@ -22,10 +22,17 @@ $('#chat_input').on('input', function()  {
 })
 
 socket.on('message',(message)=>{
+    console.log(message)
     if(!$('#chat_room_'+message.chat_room).hasClass('hidden')){
-        $('#chat_room_'+message.chat_room).append('<div class="w-full  flex flex-row align-center " ><div class="my-6 mx-2"><img class="rounded-full h-10 w-10" src="public/images/'+message.pfp+'" alt=""></div><div><div class="my-4 mx-2 p-4 rounded-lg w-full bg-tertiary"><div class="text-sm text-gray-400">'+message.username+'</div><div>'+message.message+'</div></div></div></div>')
+        if($('#no_messages_'+message.chat_room).length){
+            $('#no_messages_'+message.chat_room).remove()
+        }
+        $('#chat_room_'+message.chat_room).append('<div class="w-full  flex flex-row align-center  max-w-screen pr-6" ><div class="my-6 mx-2  flex items-center  min-w-fit"><img class="rounded-full h-10 w-10 border-2 border-['+message.color+']" src="public/images/'+message.pfp+'" alt=""></div><div><div class="my-4 mx-2 p-4 rounded-lg w-full bg-tertiary"><div class="text-sm text-['+message.color+']">'+message.username+'</div><div>'+message.message+'</div></div></div></div>')
         $("#chat_room_"+message.chat_room).scrollTop($(".all_chat_rooms")[0].scrollHeight);
     }else{
+        if($('#no_messages_'+message.chat_room).length){
+            $('#no_messages_'+message.chat_room).remove()
+        }
         $('#'+message.chat_room).css({'background-color': 'green'})
         $('#chat_room_'+message.chat_room).append("<div class='w-full  flex flex-row align-center ' ><div class='my-6 mx-2'><img class='rounded-full h-10 w-10' src=public/images/"+message.pfp+"'  alt=''></div><div><div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>"+message.message+"</div></div></div>")
         $("#chat_room_"+message.chat_room).scrollTop($(".all_chat_rooms")[0].scrollHeight);
