@@ -23,22 +23,35 @@
     <%}%>
 
     <% for (var j = 0; j < rooms[i].chat_history.length; j++) { %>
-        <div class="w-full  flex flex-row align-center  max-w-screen pr-6"   >
-            <div class="my-6 mx-2 flex items-center min-w-fit">
-                <img class="rounded-full h-10 w-10 border-2 border-[<%=  users_obj[rooms[i].chat_history[j].user].color %>]" src="public/images/<%= users_obj[rooms[i].chat_history[j].user].pfp %>" alt="">
-            </div>
+        <%if (1) { %>
+            <div class="w-full  flex flex-row align-center  max-w-screen px-4 justify-end"   >
     
-            <div>
-                <div class='my-4 mx-2 p-4 rounded-lg w-full bg-tertiary '>
-                    <div class="text-sm text-[<%=  users_obj[rooms[i].chat_history[j].user].color %>]">
-                        <%= users_obj[rooms[i].chat_history[j].user].username %>
+                    <div class='my-4  p-4 rounded-l-xl rounded-tr-lg w-fit bg-gradient-to-br from-dark_pink to-ligth_pink '>
+                        <div>
+                            <%= rooms[i].chat_history[j].message %>
+                        </div>
                     </div>
-                    <div>
-                        <%= rooms[i].chat_history[j].message %>
+
+            </div>
+        <% }else{ %>
+            <div class="w-full  flex flex-row align-center  max-w-screen px-4"   >
+                <div class="py-4 flex items-end min-w-fit">
+                    <img class="rounded-full h-10 w-10 border-2 border-[<%=  users_obj[rooms[i].chat_history[j].user].color %>]" src="public/images/<%= users_obj[rooms[i].chat_history[j].user].pfp %>" alt="">
+                </div>
+    
+                <div>
+                    <div class='my-4 mx-2 p-4 rounded-tl-lg rounded-r-lg w-full bg-tertiary '>
+                        <div class="text-sm text-[<%=  users_obj[rooms[i].chat_history[j].user].color %>]">
+                            <%= users_obj[rooms[i].chat_history[j].user].username %>
+                        </div>
+                        <div>
+                            <%= rooms[i].chat_history[j].message %>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <% } %>
+        
     <%} %>
     </div>
 <% } %>     

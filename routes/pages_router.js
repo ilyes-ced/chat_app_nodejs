@@ -9,11 +9,11 @@ const user_model = require('../models/User')
 
 
 
-const mongoose = require('mongoose');
-mongoose.connect(mongo_uri, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true
-});
+//const mongoose = require('mongoose');
+//mongoose.connect(mongo_uri, {
+//	useNewUrlParser: true,
+//	useUnifiedTopology: true
+//});
 
 
 router.get('/', is_auth_middleware, async (req, res) => {
