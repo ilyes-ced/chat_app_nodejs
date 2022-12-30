@@ -19,7 +19,6 @@ const user_model = require('../models/User')
 router.get('/', is_auth_middleware, async (req, res) => {
     try{
         var user = await user_model.findOne({email:req.session.email})
-        console.log('111')
         console.log(user.chat_rooms)
         if(user.chat_rooms.lenght == 0){
             res.render('home_page', {empty:true})

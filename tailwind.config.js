@@ -10,7 +10,7 @@ module.exports = {
                 'primary': '#1d203e',
                 'secondary': '#21293e',
                 'tertiary': '#393d5e',
-                'dark_pink': '#e15484',
+                'dark_pink': '#dc386e',
                 'ligth_pink': '#f06391',
             },
         },
