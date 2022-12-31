@@ -1,9 +1,9 @@
 
 <% for (var i = 0; i < rooms.length; i++) { %>
     <% if(i==0){%> 
-        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms overflow-auto h-full bg-[#1d203e] '>
+        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms overflow-auto h-full bg-primary '>
     <%}else{%>
-        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms overflow-auto h-full bg-[#1d203e] hidden'>
+        <div id="chat_room_<%= rooms[i].id %>" class='all_chat_rooms overflow-auto h-full bg-primary hidden'>
     <%} %>
 
 
@@ -19,7 +19,7 @@
 
     <% if(rooms[i].chat_history.length==0){%> 
         <div id="no_messages_<%= rooms[i].id%>" class="h-full w-full flex items-center justify-center">
-            <div class="rounded-lg bg-tertiary p-6">
+            <div class="rounded-lg bg-primary p-6">
                 no messages in this chat yet
             </div>
         </div>
