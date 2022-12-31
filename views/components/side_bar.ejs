@@ -1,11 +1,22 @@
-<aside class="flex flex-col overflow-x-hidden w-16  h-screen bg-secondary" aria-label="Sidebar">
-    <div class="h-12 my-2 mx-auto">
-        <button class=' bg-tertiary w-12 h-12 border-2 rounded-full border-blue-500'>icon</button>
+<aside class="flex flex-row overflow-x-hidden    bg-secondary" aria-label="Sidebar">
+    
+
+
+
+
+
+
+    <div class="bg-red-600 w-12 flex flex-col">
+        <div class="h-12 w-12 bg-emerald-600">
+            icon
+        </div>
+        <div>
+
+        </div>
     </div>
 
 
-    <hr class="w-10 h-0.5 border-blue-800 bg-blue-800 self-center " />
-    <div class="h-full flex flex-col justify-between mx-auto">
+    <div class="h-full w-96 flex flex-col justify-between mx-auto">
         <div id="to_add_button_side" class="mx-auto flex flex-col justify-between "> 
             <% for (var i = 0; i < rooms.length; i++) { %>
                 <!--<button id="<%= rooms[i].id %>" class=' change_chat_room mt-2  bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-[<%= rooms[i].color %>]'><%= rooms[i].name %></button>-->
@@ -14,4 +25,5 @@
         </div>
         <button id="add_chat_room" class=' my-2 mx-auto bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'>+</button>
     </div>
+
 </aside>   

@@ -9,11 +9,14 @@
 
 
     
-    <a href="/login">login</a>
-    <a href="/register">register</a>
-    <form action="/logout" method="post">
-        <button>logout</button>
-    </form>
+    <!--
+        <form action="/logout" method="post">
+            <button>logout</button>
+        </form>
+    -->
+        
+
+
     <% if(rooms[i].chat_history.length==0){%> 
         <div id="no_messages_<%= rooms[i].id%>" class="h-full w-full flex items-center justify-center">
             <div class="rounded-lg bg-tertiary p-6">

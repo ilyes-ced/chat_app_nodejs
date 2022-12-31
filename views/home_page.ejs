@@ -17,12 +17,14 @@
             it is no rooms
         <%}%>
 
-        <div class='flex flex-row h-full bg-[#1d203e]'>
-            <%- include('components/side_bar',rooms) %>
-            <div class='w-full h-screen flex flex-col'> 
-                <%- include('components/top_bar') %>
-                <%- include('components/main_chat_box') %>
-                <%- include('components/bottom_bar') %>
+        <div class='flex flex-col h-screen'>
+            <%- include('components/top_bar') %>
+            <div class="flex flex-row ">
+                <%- include('components/side_bar',rooms) %>
+                <div class='w-full flex flex-col'> 
+                    <%- include('components/main_chat_box') %>
+                    <%- include('components/bottom_bar') %>
+                </div>
             </div>
         </div>
 
