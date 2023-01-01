@@ -41,7 +41,12 @@
 
     <div class="h-full w-[300px] bg-primary p-2 border-r border-secondary transition-all ease-in-out duration-200">
         <div id="to_add_button_side" class="space-y-2"> 
-            <h1>Conversations</h1>
+            <div class="flex flex-row justify-between ">
+                <h1 class="p-2" >Conversations</h1>
+                <div id="add_chat_room" class="rounded-md hover:bg-secondary p-2 cursor-pointer hover:text-dark_pink">
+                    add chat room
+                </div>
+            </div>
             <input type="text" class="bg-transparent border border-[rgb(140,140,140)] rounded-md w-full px-4 py-[5px] outline-none" placeholder="Search for people . . .">
             <div class="flex flex-row justify-between">
                 <div>placeholder  <%- include('../icons/chevron_down.svg') %></div>
@@ -63,7 +68,7 @@
                 </div>
             <% } %>
         </div>
-        <button id="add_chat_room" class=' my-2 mx-auto bg-tertiary w-12 h-12 hover:rounded-lg rounded-full border-2 border-pink-600'>+</button>
+        
     </div>
 
 </aside>   
