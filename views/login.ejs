@@ -6,51 +6,50 @@
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="public/css/app.css" />
 </head>
-<body class="bg-main text-text_color h-screen flex items-center  justify-center">
+<body class="bg-main text-text_color h-screen flex items-center bg-secondary justify-center">
 
 
 
 
-    <div class='border bg-secondary rounded-lg  p-8 w-[600px]'>
-                
-                <div class='w-full h-10 border text-the_red border-the_red bg-the_red opacity-50 rounded-lg items-center  justify-center'>email or password wrong</div>
-                
-                <p class='text-[25px] font-bold mb-4'>Welcome back</p>
-                <div class='flex flex-row'>
-                <button class='border rounded-lg w-1/2 mr-2 h-10 bg-main flex flex-row  items-center  justify-center hover:bg-secondary hover:text-the_red'><x-bi-google class='mx-2'/>Log in with google</button>          
-                <button class='border rounded-lg w-1/2 ml-2 h-10 bg-main flex flex-row items-center  justify-center hover:bg-secondary hover:text-the_red '><x-bi-facebook class='mx-2'/>Log in with facebook</button>
-                </div>
-
-
-                <div class='flex flex-row items-center mt-2'>
-
-                <hr class="w-96 h-0.5 bg-icons " />
-                <div class='m-4'>OR</div>
-                <hr class="w-96 h-0.5 bg-icons " />
-                </div>
-
-
-                <div>
-                <form action="/login" method="post" class='flex flex-col'>
-                
-                    <label class='mb-2' for="email">Email</label>
-                    <input class='mb-4 pl-2 h-10 bg-main rounded-lg border' type="text" name='email' placeholder="email">
-                    <label class='mb-2' for="password">Password</label>
-                    <input class='pl-2 h-10 bg-main rounded-lg border' type="text" name='password' placeholder="password">
-                    <div class='flex justify-between my-4' >
-                    <div>
-                        <input class='' type="checkbox" name="checkbox" id="">
-                        <label for="checkbox">remember me</label>
-                    </div>
+    <div class='border border-dark_pink bg-primary rounded-lg  p-8 w-[600px] text-white'> 
+        <div class='w-full h-10 border text-dark_pink border-dark_pink bg-[rgba(220, 56, 110,0.2)] opacity-50 rounded-lg flex items-center  justify-center hidden'>email or password wrong</div>
         
-                    <a href="" class='text-the_red underline' >forgot password</a>
-                    </div>
-                    
-                    <button class='w-full bg-the_red rounded-lg h-10 mb-4 hover:bg-main hover:border hover:border-the_red'>submit</button>
-                </form>
-                dont you have accoutn?  <a href="/register" class='underline text-the_red'>sign up here</a>
-                </div>
+        <p class='text-[25px] font-bold mb-4'>Welcome back</p>
+        <div class='flex flex-row'>
+        <button class='border border-dark_pink rounded-lg w-1/2 mr-2 h-10 bg-main flex flex-row  items-center  justify-center hover:bg-secondary hover:text-the_red'><x-bi-google class='mx-2'/>Log in with google</button>          
+        <button class='border border-dark_pink rounded-lg w-1/2 ml-2 h-10 bg-main flex flex-row items-center  justify-center hover:bg-secondary hover:text-the_red '><x-bi-facebook class='mx-2'/>Log in with facebook</button>
+        </div>
+
+
+        <div class='flex flex-row items-center mt-2'>
+
+        <hr class="w-96 border-t border-dark_pink " />
+        <div class='m-4'>OR</div>
+        <hr class="w-96 border-t border-dark_pink " />
+        </div>
+
+
+        <div>
+        <form action="/login" method="post" class='flex flex-col'>
+        
+            <label class='mb-2' for="email">Email</label>
+            <input class='mb-4 pl-2 h-10 bg-secondary rounded-lg border border-dark_pink' type="text" name='email' placeholder="email">
+            <label class='mb-2' for="password">Password</label>
+            <input class='pl-2 h-10 bg-secondary rounded-lg border border-dark_pink' type="text" name='password' placeholder="password">
+            <div class='flex justify-between my-4' >
+            <div>
+                <input class='' type="checkbox" name="checkbox" id="">
+                <label for="checkbox">remember me</label>
             </div>
+    
+            <a href="" class='text-dark_pink underline' >forgot password</a>
+            </div>
+            
+            <button class='w-full bg-the_red rounded-lg h-10 mb-4 bg-secondary hover:bg-ligth_pink border border-dark_pink'>submit</button>
+        </form>
+        dont you have accoutn?  <a href="/register" class='underline text-dark_pink'>sign up here</a>
+        </div>
+    </div>
         
         
         

@@ -26,7 +26,7 @@ const login = async (req, res)=>{
 
 const register = async (req, res)=>{
 	let user = await user_model.findOne({email:req.body.email})
-	if(user) return redirect("/register")
+	if(user) return res.redirect("/register")
 	const hash_password = await bcrypt.hash(req.body.password, 10)
 	user = new user_model({
 		username: req.body.username,
