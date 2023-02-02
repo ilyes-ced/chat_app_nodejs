@@ -31,9 +31,9 @@
         <%if (user.user_id == rooms[i].chat_history[j].user) { %>
             <div class="w-full  flex flex-row align-center  max-w-screen px-4 justify-end"   >
                
-                <div class="text-gray-600 my-4  pb-1 flex items-end">
-                    <% var date = new Date(rooms[i].chat_history[j].CREATED_AT*1000)%>
-                    <%= date.getHours() + ':' + date.getMinutes().substr(-2) + ':' + date.getSeconds().substr(-2); %>
+                <div class="text-gray-600 my-4 px-2  pb-1 flex items-end">
+                    <% var date = new Date(rooms[i].chat_history[j].CREATED_AT)%>
+                    <%= date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(); %>
                 </div>
                 <div class='my-4  p-4 rounded-l-xl rounded-tr-lg w-fit bg-gradient-to-br from-dark_pink to-ligth_pink '>
                     <div>
@@ -47,7 +47,7 @@
                 <div class="py-4 flex items-end min-w-fit">
                     <img class="rounded-full h-10 w-10 border-2 border-[<%=  users_obj[rooms[i].chat_history[j].user].color %>]" src="public/images/<%= users_obj[rooms[i].chat_history[j].user].pfp %>" alt="">
                 </div>
-    
+                
                 <div>
                     <div class='my-4 mx-2 p-4 rounded-tl-lg rounded-r-lg w-full bg-tertiary '>
                         <div class="text-sm text-[<%=  users_obj[rooms[i].chat_history[j].user].color %>]">
@@ -57,6 +57,10 @@
                             <%= rooms[i].chat_history[j].message %>
                         </div>
                     </div>
+                </div>
+                <div class="text-gray-600 my-4 px-4  pb-1 flex items-end">
+                    <% var date = new Date(rooms[i].chat_history[j].CREATED_AT)%>
+                    <%= date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(); %>
                 </div>
             </div>
         <% } %>

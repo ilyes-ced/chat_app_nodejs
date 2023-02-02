@@ -1,13 +1,17 @@
-# instant messaging web app with Nodejs, Express, Mongodb and Socket.io
+# Instant messaging web app with Nodejs, Express, Mongodb and Socket.io
 
 Incomplete
 
-## features
+## Features
 - authenticate
 - instant chat
 - create and join chat groups
 
-## insallation
+## Screenshots
+
+![image info](./images/main.png)
+
+## Insallation
 install node modules
 ```
 npm install
