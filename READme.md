@@ -2,6 +2,11 @@
 
 Incomplete
 
+## features
+- authenticate
+- instant chat
+- create and join chat groups
+
 ## insallation
 install node modules
 ```

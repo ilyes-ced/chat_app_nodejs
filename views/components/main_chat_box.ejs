@@ -26,14 +26,20 @@
     <%}%>
 
     <% for (var j = 0; j < rooms[i].chat_history.length; j++) { %>
-        <%if (1) { %>
+        <% console.log(user.user_id) %>
+        <% console.log(rooms[i].chat_history[j]) %>
+        <%if (user.user_id == rooms[i].chat_history[j].user) { %>
             <div class="w-full  flex flex-row align-center  max-w-screen px-4 justify-end"   >
-    
-                    <div class='my-4  p-4 rounded-l-xl rounded-tr-lg w-fit bg-gradient-to-br from-dark_pink to-ligth_pink '>
-                        <div>
-                            <%= rooms[i].chat_history[j].message %>
-                        </div>
+               
+                <div class="text-gray-600 my-4  pb-1 flex items-end">
+                    <% var date = new Date(rooms[i].chat_history[j].CREATED_AT*1000)%>
+                    <%= date.getHours() + ':' + date.getMinutes().substr(-2) + ':' + date.getSeconds().substr(-2); %>
+                </div>
+                <div class='my-4  p-4 rounded-l-xl rounded-tr-lg w-fit bg-gradient-to-br from-dark_pink to-ligth_pink '>
+                    <div>
+                        <%= rooms[i].chat_history[j].message %>
                     </div>
+                </div>
 
             </div>
         <% }else{ %>

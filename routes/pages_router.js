@@ -19,7 +19,6 @@ const user_model = require('../models/User')
 router.get('/', is_auth_middleware, async (req, res) => {
     try{
         var user = await user_model.findOne({email:req.session.email})
-        console.log(user.chat_rooms)
         if(user.chat_rooms.lenght == 0){
             res.render('home_page', {empty:true})
             return
@@ -34,7 +33,8 @@ router.get('/', is_auth_middleware, async (req, res) => {
         users.forEach(  (element) => {
             users_obj[element._id] = {username: element.username, pfp: element.pfp, color:element.color}
         })
-        res.render('home_page',{rooms:rooms, users:users_obj,empty:false})
+        console.log(req.session)
+        res.render('home_page',{rooms:rooms, users:users_obj,empty:false, user: req.session})
     }catch{
         console.log('error')
     }

@@ -30,7 +30,6 @@ const create_chat_room = async (req, res)=>{
 			{_id : req.session.user_id},
 			{$push: {chat_rooms: chat_room.id}}
 		)
-		console.log(chat_room)
 		res.json({id:chat_room._id, name: chat_room.name})
 	}catch(err){
 		console.log(err)
