@@ -1,5 +1,7 @@
 # instant messaging web app with Nodejs, Express, Mongodb and Socket.io
 
+Incomplete
+
 ## insallation
 install node modules
 ```

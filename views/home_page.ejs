@@ -18,8 +18,10 @@
         <%}%>
 
         <div class='flex flex-col h-screen'>
-            <%- include('components/top_bar') %>
-            <div class="flex flex-row h-full">
+            <div class="h-[100px]">
+                <%- include('components/top_bar') %>
+            </div>
+            <div class="flex flex-row h-[95vh]">
                 <%- include('components/side_bar',rooms) %>
                 <div class='flex flex-col w-full'> 
                     <%- include('components/main_chat_box') %>

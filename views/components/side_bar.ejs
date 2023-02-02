@@ -4,16 +4,6 @@
 
 
     <div class="w-12 flex flex-col">
-        <div class="h-12 w-12 flex items-center justify-center">  
-            <svg width="25" height="25" viewBox="0 0 55 55" version="1.1">
-                <g id="layer1">
-                    <rect style="fill:#293041;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none" id="rect111" width="25" height="24.999998" x="5e-07" y="3.6816402e-07" />
-                    <rect style="fill:#dc386e;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none" id="rect111-3" width="25" height="24.999998" x="30" y="3.6816402e-07" />
-                    <rect style="fill:#293041;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none" id="rect111-6" width="25" height="24.999998" x="30" y="30" />
-                    <rect style="fill:#dc386e;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none" id="rect111-7" width="25" height="24.999998" x="5e-07" y="30" />
-                </g>
-            </svg>
-        </div>
         <div class="h-full flex items-center">
             <div class="flex flex-col">
                 <div class="h-12 w-12 flex items-center justify-center border-l-4 border-dark_pink cursor-pointer transition-all duration-200 ease-in-out hover:bg-dark_pink">
@@ -48,10 +38,13 @@
                 </div>
             </div>
             <input type="text" class="bg-transparent border border-[rgb(140,140,140)] rounded-md w-full px-4 py-[5px] outline-none" placeholder="Search for people . . .">
+            <!--
             <div class="flex flex-row justify-between">
-                <div>placeholder  <%- include('../icons/chevron_down.svg') %></div>
-                <div>placeholder  <%- include('../icons/chevron_down.svg') %></div>
+                <div class="flex flex-row items-center">placeholder &nbsp <%- include('../icons/chevron_down.svg') %></div>
+                <div class="flex flex-row items-center">placeholder &nbsp <%- include('../icons/chevron_down.svg') %></div>
             </div>
+            -->
+            <h1 class="text-xl">chat groups</h1>
             <% for (var i = 0; i < rooms.length; i++) { %>
                 <div class=" w-full bg-secondary flex flex-row px-4 py-2  items-start rounded-md cursor-pointer">
                     <div class="flex flex-row w-full h-full">
@@ -59,7 +52,7 @@
                             <img src="public/images/<%= rooms[i].pfp %>" id="<%= rooms[i].id %>" class='change_chat_room  bg-tertiary w-8 h-8 hover:rounded-lg rounded-full '>
                         </div>
                         <div class="flex flex-col  p-2">
-                            groupe name
+                           <%= rooms[i].name %>
                         </div>
                     </div>
                     <div class="rounded-md hover:bg-primary text-gray-600">
